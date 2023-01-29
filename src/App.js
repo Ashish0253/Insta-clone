@@ -1,5 +1,21 @@
-function App() {
-  return <div>Hello</div>;
-}
+import React, { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import * as ROUTES from "./constants/routes";
 
-export default App;
+const Login = lazy(() => import("./pages/login"));
+const SignUp = lazy(() => import("./pages/sign-up"));
+const NotFound = lazy(() => import("./pages/not-found"));
+
+export default function App() {
+  return (
+    <Router>
+      <Suspense fallback={<p>Loading.....</p>}>
+        <Routes>
+          <Route exact path={ROUTES.LOGIN} element={<Login />} />
+          <Route exact path={ROUTES.SIGN_UP} element={<SignUp />} />
+          <Route exact path={ROUTES.NOT_FOUND} element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </Router>
+  );
+}
